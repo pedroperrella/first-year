@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz 1 Ano de Namoro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .timeline {
+            position: relative;
+            margin: 40px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #ff758c;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 4px;
+        }
+        
+        .momento {
+            padding: 20px 30px;
+            position: relative;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            width: calc(50% - 30px);
+            margin-bottom: 30px;
+        }
+        
+        .momento:nth-child(odd) {
+            left: 0;
+        }
+        
+        .momento:nth-child(even) {
+            left: 50%;
+        }
+        
+        .momento::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid #ff758c;
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+        }
+        
+        .momento:nth-child(odd)::after {
+            right: -44px;
+        }
+        
+        .momento:nth-child(even)::after {
+            left: -44px;
+        }
+        
+        .momento img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .momento .data {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #ff758c;
+            margin-bottom: 5px;
+        }
+        
+        .momento h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .momento p {
+            font-size: 0.95rem;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            border-radius: 15px;
+            color: white;
+            margin-top: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .btn-presente {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: white;
+            color: #ff758c;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn-presente:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-presente:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        #modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 90%;
+            text-align: center;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .close-modal:hover {
+            color: #333;
+        }
+        
+        .modal-content h2 {
+            color: #ff758c;
+            margin-bottom: 20px;
+        }
+        
+        .modal-content p {
+            margin-bottom: 20px;
+        }
+        
+        .coracao {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff758c;
+            transform: rotate(45deg);
+            animation: flutuarCoracao 6s infinite;
+            opacity: 0;
+        }
+        
+        .coracao:before,
+        .coracao:after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: #ff758c;
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .coracao:before {
+            top: -10px;
+            left: 0;
+        }
+        
+        .coracao:after {
+            top: 0;
+            left: -10px;
+        }
+        
+        @keyframes flutuarCoracao {
+            0% {
+                transform: rotate(45deg) translateY(0) translateX(0) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0;
+            }
+            100% {
+                transform: rotate(45deg) translateY(-100px) translateX(20px) scale(0.5);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsividade para dispositivos muito pequenos */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.7rem;
+            }
+            
+            .header p, .footer p {
+                font-size: 1rem;
+            }
+            
+            .timeline::before {
+                left: 30px;
+                margin-left: 0;
+            }
+            
+            .momento {
+                width: calc(100% - 60px);
+                left: 60px !important;
+            }
+            
+            .momento::after {
+                left: -36px !important;
+                right: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="header">
+            <h1>Feliz 1 Ano, Meu Amor!</h1>
+            <p>Quem diria que depois de 10 anos íamos se encontrar novamente… 
+                E aqui estamos completando um ano de namoro! Obrigado por tudo amor, obrigado por ter me escolhido e por ter ficado ao meu lado em todos os momentos, espero poder te fazer feliz todos os dias, porque você é incrível e merece todo o amor do mundo. Te amo muito, desde o primeiro dia até o infinito!!!
+                Mas nossa história começou um pouco antes...    
+            </p>
+        </section>
+        
+        <section class="timeline">
+            <div class="momento">
+                <img src="direct.jpeg" alt="Primeiro encontro">
+                <div class="data">02 de Maio de 2023</div>
+                <p>Tomei coragem e mandei mensagem para mulher mais linda de todo o Instagram!</p>
+            </div>
+            
+            <div class="momento">
+                <img src="natory.jpg" alt="Primeiro beijo">
+                <div class="data">11 de Junho de 2023</div>
+                <p>Nosso primeiro japinha. Eu tava muito nervoso kkkk e você muito linda, como sempre.</p>
+            </div>
+            
+            <div class="momento">
+                <img src="monte-verde.jpg" alt="Pedido de namoro">
+                <div class="data">04 de Novembro de 2023</div>
+                <p>Nossa primeira viagem juntos. Monte Verde - MG</p>
+            </div>
+            
+            <div class="momento">
+                <img src="torre.jpg" alt="Primeira viagem">
+                <div class="data">25 de Fevereiro de 2024</div>
+                <p>Primeiro dia na Torre e voltando cansados de Serra Negra.</p>
+            </div>
+            
+            <div class="momento">
+                <img src="niver-pedro.JPG" alt="Aniversário">
+                <div class="data">29 de Maio de 2024</div>
+                <p>Passando meu primeiro aniversário com você. Piracaia - SP</p>
+            </div>
+            
+            <div class="momento">
+                <img src="niver.jpg" alt="Jantar especial">
+                <div class="data">04 de Junho de 2024</div>
+                <p>Comemorando seus 27 anos juntinhos.</p>
+            </div>
+            
+            <div class="momento">
+                <img src="interior.jpg" alt="Concerto">
+                <div class="data">30 de Setembro de 2024</div>
+                <p>Dando um rolê no interior. Ouroeste - SP</p>
+            </div>
+            
+            <div class="momento">
+                <img src="rio-quente.jpg" alt="Piquenique">
+                <div class="data">03 de Outubro de 2024</div>
+                <p>Saudades dessa viagem! Rio Quente - GO</p>
+            </div>
+            
+            <div class="momento">
+                <img src="lounge.jpg" alt="Momento difícil">
+                <div class="data">10 de Novembro de 2024</div>
+                <p>Embarcando para uma jornada (literlamente) incrivel.</p>
+            </div>
+            
+            <div class="momento">
+                <img src="nyc.jpg" alt="Halloween">
+                <div class="data">11 de Novembro de 2024</div>
+                <p>Nossa primeira (de muitas) viagem internacional juntos. Passando muito frio em Nova York &#x1F1FA;&#x1F1F8;</p>
+            </div>
+            
+            <div class="momento">
+                <img src="orlando.jpg" alt="Hoje">
+                <div class="data">11 de Fevereiro de 2025</div>
+                <h3>Um Ano de Amor</h3>
+                <p>Muitos parques, compras e emoções em Orlando &#x1F1FA;&#x1F1F8;</p>
+            </div>
+        </section>
+        
+        <section class="footer">
+            <p>Poderia passar horas colocando fotos e momentos especiais aqui (e olha que foi só um ano)! É incrivel poder viver tudo isso com você, 
+                ansioso para viver muito mais ao seu lado, criando novas memórias e compartilhando sonhos!!!!
+                E por ter aguentado um ano ao meu lado (que não é fácil), você merece um presente especial para relaxar
+                e fazer algo que você gosta.</p>
+            <a href="gift-card.jpg" class="btn-presente" id="btnPresente" target="_blank">Abra Seu Presente</a>
+        </section>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnPresente = document.getElementById('btnPresente');
+            const modal = document.getElementById('modal');
+            const closeModal = document.getElementById('closeModal');
+            
+  
+            btnPresente.addEventListener('click', function(e) {
+                createHearts();
+            });
+            
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Criando corações flutuantes
+            function createHearts() {
+                // Criar vários corações de uma vez quando o botão é clicado
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(() => {
+                        criarCoracao();
+                    }, i * 200); // Espaçar a criação dos corações para um efeito mais contínuo
+                }
+            }
+            
+            function criarCoracao() {
+                const heart = document.createElement('div');
+                heart.classList.add('coracao');
+                
+                // Posições e tamanhos aleatórios
+                const left = Math.random() * 90 + 5; // 5% a 95% da largura da tela
+                const size = Math.random() * 20 + 15; // Tamanhos entre 15px e 35px
+                const duration = Math.random() * 4 + 4; // 4 a 8 segundos
+                
+                // Cores aleatórias em tons de rosa/vermelho
+                const hue = Math.floor(Math.random() * 20) + 340; // 340-360 ou 0-10 no espectro HSL
+                const saturation = Math.floor(Math.random() * 20) + 80; // 80-100%
+                const lightness = Math.floor(Math.random() * 20) + 60; // 60-80%
+                
+                const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+                
+                heart.style.left = left + '%';
+                heart.style.bottom = '5%';
+                heart.style.width = size + 'px';
+                heart.style.height = size + 'px';
+                heart.style.animationDuration = duration + 's';
+                heart.style.background = color;
+                
+                // Adicionar o mesmo cor para os pseudo-elementos do coração
+                const styleSheet = document.styleSheets[0];
+                const ruleIndex = styleSheet.cssRules.length;
+                
+                document.body.appendChild(heart);
+                
+                // Defina a mesma cor para os pseudo-elementos
+                heart.querySelectorAll('::before, ::after').forEach(element => {
+                    element.style.background = color;
+                });
+                
+                // Removendo corações após a animação
+                setTimeout(() => {
+                    heart.remove();
+                }, duration * 1000);
+            }
+            
+            // Criando corações aleatórios na página - alguns já aparecem sem clicar
+            setInterval(() => {
+                if (Math.random() > 0.7) { // 30% de chance de criar um coração a cada intervalo
+                    criarCoracao();
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

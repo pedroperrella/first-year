@@ -314,7 +314,7 @@
             </div>
             
             <div class="momento">
-                <img src="niver-pedro.JPG" alt="Aniversário">
+                <img src="niver-pedro.jpg" alt="Aniversário">
                 <div class="data">29 de Maio de 2024</div>
                 <p>Passando meu primeiro aniversário com você. Piracaia - SP</p>
             </div>
@@ -387,62 +387,6 @@
                 }
             });
             
-            // Criando corações flutuantes
-            function createHearts() {
-                // Criar vários corações de uma vez quando o botão é clicado
-                for (let i = 0; i < 30; i++) {
-                    setTimeout(() => {
-                        criarCoracao();
-                    }, i * 200); // Espaçar a criação dos corações para um efeito mais contínuo
-                }
-            }
-            
-            function criarCoracao() {
-                const heart = document.createElement('div');
-                heart.classList.add('coracao');
-                
-                // Posições e tamanhos aleatórios
-                const left = Math.random() * 90 + 5; // 5% a 95% da largura da tela
-                const size = Math.random() * 20 + 15; // Tamanhos entre 15px e 35px
-                const duration = Math.random() * 4 + 4; // 4 a 8 segundos
-                
-                // Cores aleatórias em tons de rosa/vermelho
-                const hue = Math.floor(Math.random() * 20) + 340; // 340-360 ou 0-10 no espectro HSL
-                const saturation = Math.floor(Math.random() * 20) + 80; // 80-100%
-                const lightness = Math.floor(Math.random() * 20) + 60; // 60-80%
-                
-                const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-                
-                heart.style.left = left + '%';
-                heart.style.bottom = '5%';
-                heart.style.width = size + 'px';
-                heart.style.height = size + 'px';
-                heart.style.animationDuration = duration + 's';
-                heart.style.background = color;
-                
-                // Adicionar o mesmo cor para os pseudo-elementos do coração
-                const styleSheet = document.styleSheets[0];
-                const ruleIndex = styleSheet.cssRules.length;
-                
-                document.body.appendChild(heart);
-                
-                // Defina a mesma cor para os pseudo-elementos
-                heart.querySelectorAll('::before, ::after').forEach(element => {
-                    element.style.background = color;
-                });
-                
-                // Removendo corações após a animação
-                setTimeout(() => {
-                    heart.remove();
-                }, duration * 1000);
-            }
-            
-            // Criando corações aleatórios na página - alguns já aparecem sem clicar
-            setInterval(() => {
-                if (Math.random() > 0.7) { // 30% de chance de criar um coração a cada intervalo
-                    criarCoracao();
-                }
-            }, 2000);
         });
     </script>
 </body>

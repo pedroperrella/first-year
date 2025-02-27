@@ -279,6 +279,16 @@
     </style>
 </head>
 <body>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2>Digite a Senha</h2>
+            <input type="password" id="passwordInput" placeholder="Digite a senha secreta">
+            <button onclick="checkPassword()" class="btn-presente" style="margin-top: 20px;">Verificar</button>
+            <p id="errorMessage" style="color: red; display: none;">Senha incorreta!</p>
+        </div>
+    </div>
+
     <div class="container">
         <section class="header">
             <h1>Feliz 1 Ano, Meu Amor!</h1>
@@ -290,67 +300,67 @@
         
         <section class="timeline">
             <div class="momento">
-                <img src="direct.jpeg" alt="Primeiro encontro">
+                <img src="./img/direct.jpeg" alt="Primeiro encontro">
                 <div class="data">02 de Maio de 2023</div>
                 <p>Tomei coragem e mandei mensagem para mulher mais linda de todo o Instagram!</p>
             </div>
             
             <div class="momento">
-                <img src="natory.jpg" alt="Primeiro beijo">
+                <img src="./img/natory.jpg" alt="Primeiro beijo">
                 <div class="data">11 de Junho de 2023</div>
                 <p>Nosso primeiro japinha. Eu tava muito nervoso kkkk e você muito linda, como sempre.</p>
             </div>
             
             <div class="momento">
-                <img src="monte-verde.jpg" alt="Pedido de namoro">
+                <img src="./img/monte-verde.jpg" alt="Pedido de namoro">
                 <div class="data">04 de Novembro de 2023</div>
                 <p>Nossa primeira viagem juntos. Monte Verde - MG</p>
             </div>
             
             <div class="momento">
-                <img src="torre.jpg" alt="Primeira viagem">
+                <img src="./img/torre.jpg" alt="Primeira viagem">
                 <div class="data">25 de Fevereiro de 2024</div>
                 <p>Primeiro dia na Torre e voltando cansados de Serra Negra.</p>
             </div>
             
             <div class="momento">
-                <img src="niver-pedro.jpg" alt="Aniversário">
+                <img src="./img/niver-pedro.jpg" alt="Aniversário">
                 <div class="data">29 de Maio de 2024</div>
                 <p>Passando meu primeiro aniversário com você. Piracaia - SP</p>
             </div>
             
             <div class="momento">
-                <img src="niver.jpg" alt="Jantar especial">
+                <img src="./img/niver.jpg" alt="Jantar especial">
                 <div class="data">04 de Junho de 2024</div>
                 <p>Comemorando seus 27 anos juntinhos.</p>
             </div>
             
             <div class="momento">
-                <img src="interior.jpg" alt="Concerto">
+                <img src="./img/interior.jpg" alt="Concerto">
                 <div class="data">30 de Setembro de 2024</div>
                 <p>Dando um rolê no interior. Ouroeste - SP</p>
             </div>
             
             <div class="momento">
-                <img src="rio-quente.jpg" alt="Piquenique">
+                <img src="./img/rio-quente.jpg" alt="Piquenique">
                 <div class="data">03 de Outubro de 2024</div>
                 <p>Saudades dessa viagem! Rio Quente - GO</p>
             </div>
             
             <div class="momento">
-                <img src="lounge.jpg" alt="Momento difícil">
+                <img src="./img/lounge.jpg" alt="Momento difícil">
                 <div class="data">10 de Novembro de 2024</div>
                 <p>Embarcando para uma jornada (literlamente) incrivel.</p>
             </div>
             
             <div class="momento">
-                <img src="nyc.jpg" alt="Halloween">
+                <img src="./img/nyc.jpg" alt="Halloween">
                 <div class="data">11 de Novembro de 2024</div>
                 <p>Nossa primeira (de muitas) viagem internacional juntos. Passando muito frio em Nova York &#x1F1FA;&#x1F1F8;</p>
             </div>
             
             <div class="momento">
-                <img src="orlando.jpg" alt="Hoje">
+                <img src="./img/orlando.jpg" alt="Hoje">
                 <div class="data">11 de Fevereiro de 2025</div>
                 <h3>Um Ano de Amor</h3>
                 <p>Muitos parques, compras e emoções em Orlando &#x1F1FA;&#x1F1F8;</p>
@@ -362,19 +372,48 @@
                 ansioso para viver muito mais ao seu lado, criando novas memórias e compartilhando sonhos!!!!
                 E por ter aguentado um ano ao meu lado (que não é fácil), você merece um presente especial para relaxar
                 e fazer algo que você gosta.</p>
-            <a href="" class="btn-presente" id="btnPresente" target="_blank">Abra Seu Presente</a>
+            <a href="#" class="btn-presente" id="btnPresente">Abra Seu Presente</a>
         </section>
     </div>
     
     <script>
+        const CORRECT_HASH = '4548e7eaa95660095ca4dce0df3fac567c259327b5a43e8ffc3164277622b381';
+
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        async function checkPassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const errorMessage = document.getElementById('errorMessage');
+            const modal = document.getElementById('modal');
+            
+            const inputHash = await sha256(passwordInput.value);
+            
+            if (inputHash === CORRECT_HASH) {
+                modal.style.display = 'none';
+                window.open('./img/gift.jpeg', '_blank');
+                createHearts();
+            } else {
+                errorMessage.style.display = 'block';
+                passwordInput.value = '';
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const btnPresente = document.getElementById('btnPresente');
             const modal = document.getElementById('modal');
             const closeModal = document.getElementById('closeModal');
             
-  
             btnPresente.addEventListener('click', function(e) {
-                createHearts();
+                e.preventDefault();
+                modal.style.display = 'flex';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('errorMessage').style.display = 'none';
             });
             
             closeModal.addEventListener('click', function() {
@@ -386,7 +425,12 @@
                     modal.style.display = 'none';
                 }
             });
-            
+
+            document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
+            });
         });
     </script>
 </body>

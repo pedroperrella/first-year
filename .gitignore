@@ -1,0 +1,21 @@
+# Image files
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.ico
+*.svg
+
+# Image directories
+/img/
+/images/
+/assets/images/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

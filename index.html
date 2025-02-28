@@ -178,6 +178,7 @@
             padding: 30px;
             border-radius: 15px;
             max-width: 90%;
+            width: 320px;
             text-align: center;
             position: relative;
         }
@@ -251,7 +252,40 @@
             }
         }
         
-        /* Responsividade para dispositivos muito pequenos */
+        #passwordInput {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ff758c;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-top: 10px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        #passwordInput:focus {
+            border-color: #ff7eb3;
+            box-shadow: 0 0 0 3px rgba(255, 117, 140, 0.2);
+        }
+        
+        #errorMessage {
+            color: #ff4444;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+            padding: 8px;
+            border-radius: 4px;
+            background-color: rgba(255, 68, 68, 0.1);
+        }
+        
+        .modal-content button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+        }
+        
+        /* Mobile specific adjustments */
         @media (max-width: 480px) {
             .header h1 {
                 font-size: 1.7rem;
@@ -274,6 +308,17 @@
             .momento::after {
                 left: -36px !important;
                 right: auto !important;
+            }
+            
+            .modal-content {
+                margin: 20px;
+                padding: 20px;
+            }
+            
+            #passwordInput {
+                font-size: 16px; /* Prevents zoom on iPhone */
+                -webkit-appearance: none; /* Removes default iOS styling */
+                appearance: none;
             }
         }
     </style>
@@ -391,15 +436,24 @@
             const errorMessage = document.getElementById('errorMessage');
             const modal = document.getElementById('modal');
             
+            if (!passwordInput.value.trim()) {
+                errorMessage.textContent = 'Por favor, digite a senha!';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
             const inputHash = await sha256(passwordInput.value);
             
             if (inputHash === CORRECT_HASH) {
                 modal.style.display = 'none';
-                window.open('https://res.cloudinary.com/drt3saggn/image/upload/q_auto,f_auto/v1/love-project/zykfhgalkzwgdu2ytact', '_blank');
+                // Open in same window for better iOS compatibility
+                window.location.href = 'https://res.cloudinary.com/drt3saggn/image/upload/q_auto,f_auto/v1/love-project/zykfhgalkzwgdu2ytact';
                 createHearts();
             } else {
+                errorMessage.textContent = 'Senha incorreta! Tente novamente.';
                 errorMessage.style.display = 'block';
                 passwordInput.value = '';
+                passwordInput.focus();
             }
         }
 
@@ -407,12 +461,15 @@
             const btnPresente = document.getElementById('btnPresente');
             const modal = document.getElementById('modal');
             const closeModal = document.getElementById('closeModal');
+            const passwordInput = document.getElementById('passwordInput');
             
             btnPresente.addEventListener('click', function(e) {
                 e.preventDefault();
                 modal.style.display = 'flex';
-                document.getElementById('passwordInput').value = '';
+                passwordInput.value = '';
                 document.getElementById('errorMessage').style.display = 'none';
+                // Focus after a small delay to ensure modal is visible
+                setTimeout(() => passwordInput.focus(), 100);
             });
             
             closeModal.addEventListener('click', function() {

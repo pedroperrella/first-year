@@ -446,8 +446,8 @@
             
             if (inputHash === CORRECT_HASH) {
                 modal.style.display = 'none';
-                // Open in same window for better iOS compatibility
-                window.location.href = 'https://res.cloudinary.com/drt3saggn/image/upload/q_auto,f_auto/v1/love-project/zykfhgalkzwgdu2ytact';
+                // Only open in new page
+                window.open('https://res.cloudinary.com/drt3saggn/image/upload/q_auto,f_auto/v1/love-project/zykfhgalkzwgdu2ytact', '_blank');
                 createHearts();
             } else {
                 errorMessage.textContent = 'Senha incorreta! Tente novamente.';
